@@ -31,7 +31,12 @@ class HomeView extends StatelessWidget {
       body: SizedBox(
         //height: double.infinity,
         //width: double.infinity,
-        child: _SongsList(scrollController: scrollController,songs: songs) )
+        child: _SongsList(scrollController: scrollController,songs: songs) ),
+      floatingActionButton: FloatingActionButton(
+      child: const Icon(Icons.add_rounded)
+      ,onPressed: () {
+
+      },),
     );
   }
 }
@@ -44,14 +49,15 @@ class _SongsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,mainAxisSpacing: 10,crossAxisSpacing: 10,childAspectRatio: 0.80),
+    return ListView.builder(
         itemCount: songs.length,
         itemBuilder: (context, index) {
           return _SongItem(song: songs[index]);
         },);
   }
 }
+
+enum SampleItem { itemOne, itemTwo }
 
 class _SongItem extends StatelessWidget {
   _SongItem({super.key, required this.song});
@@ -60,7 +66,41 @@ class _SongItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return Card(
+    return InkWell(
+      onTap: () {
+        print("Reproduci la cancion");
+      },
+      child: ListTile(
+        title: Text(song.name,style: textTheme.titleLarge),
+        subtitle: Text(song.author,style: textTheme.titleMedium),
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+            child: Image.asset(song.image)),
+        trailing: PopupMenuButton<SampleItem>(itemBuilder: (context) => <PopupMenuEntry<SampleItem>>[
+          PopupMenuItem<SampleItem>(
+            value: SampleItem.itemOne,
+            child: const Text('Agregar a un PlayList'),
+            onTap: () {
+              print("Agregue a la playlist");
+            },
+          ),
+           PopupMenuItem<SampleItem>(
+            value: SampleItem.itemTwo,
+            child: const Text('Eliminar Cancion'),
+            onTap: () {
+              print("Elimine la cancion");
+            },
+          ),
+        ],
+        ),
+      ),
+    );
+
+  }
+}
+
+/* Version Antigua
+ return Card(
       child: Column(
         children: [
           Padding(
@@ -74,5 +114,4 @@ class _SongItem extends StatelessWidget {
         ],
       ),
     );
-  }
-}
+ */
