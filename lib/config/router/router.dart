@@ -2,23 +2,19 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:go_router/go_router.dart';
 import 'package:reproductormusica/presentation/screens/screens.dart';
-import 'package:reproductormusica/presentation/screens/song/song_screen.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/home/0',
     routes: [
-      GoRoute(path: '/',
+      GoRoute(path: '/home/:page',
           name: HomeScreen.name,
       builder: (context, state) {
-        return HomeScreen();
+        final pageIndex = int.parse(state.pathParameters['page'] ?? '0');
+        return HomeScreen(pageIndex: pageIndex);
       },
       routes: [
-        GoRoute(path: 'song/:id',
-        name: SongScreen.name,
-        builder: (context, state) {
-          final song = state.extra as Audio;
-          return SongScreen(song: song);
-        },)
+
       ]
-      )
+      ),
+      GoRoute(path: '/',redirect: (context, state) => '/home/0')
     ]);
