@@ -14,7 +14,8 @@ class SongSelectorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return SafeArea(
+      minimum: const EdgeInsets.all(2),
       child: _assetsAudioPlayer.builderCurrent(
         builder: (context, Playing? playing) {
           return SongsSelectorWidget(

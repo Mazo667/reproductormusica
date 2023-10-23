@@ -41,52 +41,58 @@ class HomeViewState extends State<SongView> {
     return source.firstWhere((element) => element.path == fromPath);
   }
 
+
   @override
   Widget build(BuildContext context) {
+  //  final size = MediaQuery.of(context).size;
     final Color colorSheme = Theme.of(context).colorScheme.primary;
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.black12,
-          gradient: LinearGradient(begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
-              colors: [colorSheme,Colors.transparent]),
-          borderRadius: BorderRadius.circular(20),
-        ),
+    return Center(
+      child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(bottom: 40),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 20),
-              Stack(
-                alignment: Alignment.center,
+          padding: const EdgeInsets.only(top: 40,right: 5,left: 5),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.black12,
+              gradient: LinearGradient(begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [colorSheme,Colors.transparent]),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  StreamBuilder<Playing?>(
-                      stream: _assetsAudioPlayer.current,
-                      builder: (context, playing) {
-                        if(playing.data != null){
-                          final myAudio = find(
-                              audios, playing.data!.audio.assetAudioPath);
-                          print((playing.data!.audio.assetAudioPath));
-                          return Padding(
-                              padding: const EdgeInsets.all(4),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: myAudio.metas.image?.type == ImageType.network ? Image.network(myAudio.metas.image!.path,height: 180,width: 180,fit: BoxFit.cover)
-                                    : Image.asset(myAudio.metas.image!.path,height: 180,width: 180,fit: BoxFit.cover),
-                              ));
-                        }
-                        return const SizedBox.shrink();
-                      }),
+                  const SizedBox(height: 20),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      StreamBuilder<Playing?>(
+                          stream: _assetsAudioPlayer.current,
+                          builder: (context, playing) {
+                            if(playing.data != null){
+                              final myAudio = find(
+                                  audios, playing.data!.audio.assetAudioPath);
+                              print((playing.data!.audio.assetAudioPath));
+                              return Padding(
+                                  padding: const EdgeInsets.all(4),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: myAudio.metas.image?.type == ImageType.network ? Image.network(myAudio.metas.image!.path,height: 180,width: 180,fit: BoxFit.cover)
+                                        : Image.asset(myAudio.metas.image!.path,height: 180,width: 180,fit: BoxFit.cover),
+                                  ));
+                            }
+                            return const SizedBox.shrink();
+                          }),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  SliderSong(assetsAudioPlayer: _assetsAudioPlayer),
+                  Botones(assetsAudioPlayer: _assetsAudioPlayer),
+                  SongSelectorWidget(assetsAudioPlayer: _assetsAudioPlayer, audios: audios)
                 ],
               ),
-              const SizedBox(height: 10),
-              SliderSong(assetsAudioPlayer: _assetsAudioPlayer),
-              Botones(assetsAudioPlayer: _assetsAudioPlayer),
-              SongSelectorWidget(assetsAudioPlayer: _assetsAudioPlayer, audios: audios)
-            ],
+            ),
           ),
         ),
       ),
