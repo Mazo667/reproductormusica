@@ -27,7 +27,7 @@ class HomeViewState extends State<SongView> {
     await _assetsAudioPlayer.open(
       Playlist(audios: audios, startIndex: 0),
       showNotification: true,
-      //autoStart: true,
+      autoStart: false,
     );
   }
 

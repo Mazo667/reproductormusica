@@ -2,18 +2,20 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:reproductormusica/domain/entities/song.dart';
+import 'package:reproductormusica/presentation/providers/audios/audio_provider.dart';
 import 'package:reproductormusica/presentation/widgets/widgets.dart';
 
-class HomeView extends StatefulWidget {
-  HomeView({super.key});
+class HomeView extends ConsumerStatefulWidget {
+  const HomeView();
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  HomeViewState createState() => HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class HomeViewState extends ConsumerState<HomeView> {
   final _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
   String? _fileName;
   String? _directoryPath;
@@ -21,13 +23,13 @@ class _HomeViewState extends State<HomeView> {
   List<PlatformFile>? paths;
   bool _userAborted = false;
   bool _isLoading = false;
-  //TODO REMPLAZAR ESTA LISTA DE CANCIONES CON LOS MP3 QUE TENGA EL DISPOSITIVO
-  final List<Song> songs = [
-    Song(id: 0, name: 'Titanium', author: 'David Guetta', category: 'Electronica', path: 'Descargas',image: 'assets/images/titanium.jpeg'),
-    Song(id: 1, name: 'Me niego', author: 'Ozuna', category: 'Reguetton', path: 'Descargas',image: 'assets/images/mp3_icon.png'),
-    Song(id: 2, name: 'No se va', author: 'La Konga', category: 'Cumbia', path: 'Descargas',image: 'assets/images/mp3_icon.png'),
-    Song(id: 2, name: 'Wake Me Up', author: 'Avicci', category: 'Electronica', path: 'Descargas',image: 'assets/images/wakemeup.jpg'),
-  ];
+ 
+  @override
+  void initState() {
+    super.initState();
+    ref.read(audioPickedProvider.notifier).loadNextPage();
+  }
+
 
   void _pickFiles() async {
     try{
@@ -91,6 +93,9 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+
+    final audiosPicked = ref.watch(audioPickedProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Canciones'),
@@ -105,7 +110,7 @@ class _HomeViewState extends State<HomeView> {
       body: SizedBox(
         //height: double.infinity,
         //width: double.infinity,
-        child: _SongsList(scrollController: scrollController,songs: songs) ),
+        child: _SongsList(scrollController: scrollController,songs: audiosPicked) ),
       floatingActionButton: FloatingActionButton(
       child: const Icon(Icons.add_rounded)
       ,onPressed: () {
@@ -119,7 +124,7 @@ class _SongsList extends StatelessWidget {
    _SongsList({super.key, required this.scrollController, required this.songs});
 
   final ScrollController scrollController;
-  final List<Song> songs;
+  final List<Audio> songs;
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +140,7 @@ enum PopMenuItemsEnum { itemOne, itemTwo }
 
 class _SongItem extends StatelessWidget {
   _SongItem({super.key, required this.song});
-  final Song song;
+  final Audio song;
 
   @override
   Widget build(BuildContext context) {
@@ -145,11 +150,11 @@ class _SongItem extends StatelessWidget {
         print("Reproduci la cancion");
       },
       child: ListTile(
-        title: Text(song.name,style: textTheme.titleLarge),
-        subtitle: Text(song.author,style: textTheme.titleMedium),
+        title: Text(song.metas.title!,style: textTheme.titleLarge),
+        subtitle: Text(song.metas.artist!,style: textTheme.titleMedium),
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(10),
-            child: Image.asset(song.image)),
+            child: Image.asset(song.metas.image!.path ?? 'assets/images/mp3_icon.png')),
         trailing: PopupMenuButton<PopMenuItemsEnum>(itemBuilder: (context) => <PopupMenuEntry<PopMenuItemsEnum>>[
           PopupMenuItem<PopMenuItemsEnum>(
             value: PopMenuItemsEnum.itemOne,

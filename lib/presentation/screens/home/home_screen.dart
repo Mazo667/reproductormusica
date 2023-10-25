@@ -1,6 +1,7 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:reproductormusica/presentation/views/song_view.dart';
 import 'package:reproductormusica/presentation/widgets/widgets.dart';
 import 'package:reproductormusica/presentation/views/views.dart';
 
