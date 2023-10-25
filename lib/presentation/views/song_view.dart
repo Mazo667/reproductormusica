@@ -14,6 +14,7 @@ class HomeViewState extends State<SongView> {
   final audios = <Audio>[
     Audio('assets/audios/Titanium.mp3',metas: Metas(title: 'Titanium',artist: 'David Guetta',image: const MetasImage.network('https://i1.sndcdn.com/artworks-000049042222-aeu7k5-t500x500.jpg'))),
     Audio('assets/audios/Me Niego.mp3',metas: Metas(title: 'Me Niego',artist: 'Kuwait',image: const MetasImage.network('https://pbs.twimg.com/media/DrBmvE5XgAAHea8.jpg'))),
+    Audio('assets/audios/Like A Rainbow.mp3',metas: Metas(title: 'Like a Rainbow',artist: 'Re-Con & Demand',image: const MetasImage.asset('assets/images/mp3_icon.png'))),
   ];
   @override
   void initState() {

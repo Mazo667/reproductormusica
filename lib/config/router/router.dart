@@ -1,5 +1,6 @@
 
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:go_router/go_router.dart';
 import 'package:reproductormusica/presentation/screens/screens.dart';
 
@@ -12,9 +13,12 @@ final appRouter = GoRouter(
         final pageIndex = int.parse(state.pathParameters['page'] ?? '0');
         return HomeScreen(pageIndex: pageIndex);
       },
-      routes: [
+        routes: [
 
-      ]
+        ]
       ),
-      GoRoute(path: '/',redirect: (context, state) => '/home/0')
+      GoRoute(path: '/',redirect: (context, state) => '/home/0'),
+      GoRoute(path: '/songCreator',builder: (context, state) {
+        return SongFileCreator(paths: state.extra as List<PlatformFile>);
+      })
     ]);

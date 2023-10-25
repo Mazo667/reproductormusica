@@ -1,6 +1,6 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:reproductormusica/presentation/widgets/playingControls.dart';
+import 'package:reproductormusica/presentation/widgets/song/playingControls.dart';
 
 class Botones extends StatelessWidget {
   const Botones({

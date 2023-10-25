@@ -69,13 +69,13 @@ class PlayingControls extends StatelessWidget {
           },
           child: _loopIcon(context),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 10),
         IconButton(onPressed: isPlaylist ? onPrevious : null, icon: const Icon(Icons.skip_previous,size: 34,)),
-        const SizedBox(width: 12),
-        IconButton(onPressed: onPlay, icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow, size: 34)),
-        const SizedBox(width: 12),
+        const SizedBox(width: 10),
+        IconButton(onPressed: onPlay, icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow, size: 54)),
+        const SizedBox(width: 10),
         IconButton(onPressed: isPlaylist ? onNext : null, icon: const Icon(Icons.skip_next,size: 34,)),
-        const SizedBox(width: 12),
+        const SizedBox(width: 10),
         if (onStop != null)
           IconButton(onPressed: onStop, icon: const Icon(Icons.stop,size: 32))
       ],

@@ -30,7 +30,7 @@ class SongSelectorWidget extends StatelessWidget {
               try{
                 await _assetsAudioPlayer.open(
                   myAudio,
-                  autoStart: true,
+                  autoStart: false,
                   showNotification: true,
                   playInBackground: PlayInBackground.enabled,
                   audioFocusStrategy: const AudioFocusStrategy.request(

@@ -71,8 +71,8 @@ class SongsSelectorWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20)
                   ),
                   child: ListTile(
-                      leading: Material(
-                        shape: const CircleBorder(),
+                      leading: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
                         clipBehavior: Clip.antiAlias,
                         child: _image(item),
                       ),

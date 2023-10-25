@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:reproductormusica/presentation/widgets/widgets.dart';
 import 'package:reproductormusica/presentation/views/views.dart';
 
+import '../../views/file_picker_view.dart';
+
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key, required this.pageIndex});
 
@@ -13,7 +15,7 @@ class HomeScreen extends StatelessWidget {
   final viewRoutes =  <Widget>[
    HomeView(),
    SongView(),
-   PlayListView()
+    FilePickerView()
   ];
 
   @override
